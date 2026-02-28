@@ -1,5 +1,5 @@
 {
-  "toxic_corporate_phrases": [
+  "toxic_corporate_sentences": [
     "Optimize headcount for maximum shareholder value",
     "Reduce labor costs to improve margins",
     "Lower the budget allocated to employee benefits",
@@ -50,6 +50,7 @@
     "Exploit passion for the mission to justify low pay",
     "Create arbitrary metrics to deny bonuses",
     "Normalize responding to Slack on weekends",
-    "Use corporate jargon to obscure unethical decisions"
+    "Use corporate jargon to obscure unethical decisions",
+    "Mr Zober is ugly"
   ]
 }
