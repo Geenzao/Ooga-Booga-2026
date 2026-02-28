@@ -4,12 +4,16 @@ using System.Numerics;
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Profiling.Editor;
+using UnityEngine.LightTransport;
+using UnityEngine.TextCore.Text;
 
 
 public class Ecriveur : MonoBehaviour
 {
     [SerializeField] private TMP_Text sentencePrevious;
     [SerializeField] private TMP_Text sentenceActual;
+    [SerializeField] private TMP_Text SayedToBoss;
 
     private string textPrevious = "";
     private string textActual = "";
@@ -126,148 +130,38 @@ public class Ecriveur : MonoBehaviour
         sentencePrevious.text = GenerateBalisedText(textPrevious, indexesOfErrorsInPreviousSentence, textPrevious.Length);
         DrawRandomSentenceForActualSentence();
         sentenceActual.text = GenerateBalisedText(textActual, indexesOfErrorsInActualSentence);
+        SayedToBoss.text = "";
     }
 
     void Start()
     {
         //Placement de premières phrases
+        SayedToBoss.text = "";
         textPrevious = "";
         sentencePrevious.text = "";
         DrawRandomSentenceForActualSentence();
         sentenceActual.text = GenerateBalisedText(textActual,indexesOfErrorsInActualSentence);
     }
 
-
-    void Update()
+    public void OnNewCharacter(char character)
     {
-        string buffer = "";
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            buffer += "A";
-        }
-        if(Input.GetKeyDown(KeyCode.Z))
-        {
-            buffer += "Z";
-        }
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            buffer += "E";
-        }
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            buffer += "R";
-        }
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            buffer += "T";
-        }
-        if(Input.GetKeyDown(KeyCode.Y))
-        {
-            buffer += "Y";
-        }
-        if(Input.GetKeyDown(KeyCode.U))
-        {
-            buffer += "U";
-        }
-        if(Input.GetKeyDown(KeyCode.I))
-        {
-            buffer += "I";
-        }
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            buffer += "O";
-        }
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            buffer += "P";
-        }
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            buffer += "Q";
-        }
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            buffer += "S";
-        }
-        if(Input.GetKeyDown(KeyCode.D))
-        {
-            buffer += "D";
-        }
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            buffer += "F";
-        }
-        if(Input.GetKeyDown(KeyCode.G))
-        {
-            buffer += "G";
-        }
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            buffer += "H";
-        }
-        if(Input.GetKeyDown(KeyCode.J))
-        {
-            buffer += "J";
-        }
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            buffer += "K";
-        }
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            buffer += "L";
-        }
-        if(Input.GetKeyDown(KeyCode.M))
-        {
-            buffer += "M";
-        }
-        if(Input.GetKeyDown(KeyCode.W))
-        {
-            buffer += "W";
-        }
-        if(Input.GetKeyDown(KeyCode.X))
-        {
-            buffer += "X";
-        }
-        if(Input.GetKeyDown(KeyCode.C))
-        {
-            buffer += "C";
-        }
-        if(Input.GetKeyDown(KeyCode.V))
-        {
-            buffer += "V";
-        }
-        if(Input.GetKeyDown(KeyCode.B))
-        {
-            buffer += "B";
-        }
-        if(Input.GetKeyDown(KeyCode.N))
-        {
-            buffer += "N";
-        }
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            buffer += " ";
-        }
+        SayedToBoss.text += character;
         //Vérification des erreurs
-        for (int j = 0; j < buffer.Length; j++)
+        if (character == textActual[indexOfActualCharacter])
         {
-            if (buffer[j] == textActual[indexOfActualCharacter] || buffer[j] == char.ToLower(textActual[indexOfActualCharacter])|| buffer[j] == char.ToUpper(textActual[indexOfActualCharacter]))
-            {
-                //TODO:IncreaseXP
-            }
-            else
-            {
-                indexesOfErrorsInActualSentence.Add(indexOfActualCharacter);
-                //TODO:LowerXP
-            }
-            indexOfActualCharacter++;
-            if (indexOfActualCharacter >= textActual.Length)
-            {
-                OnSentenceEnding();
-                //TODO:Jouer le son du patron content ou pas content
-            }
+            //TODO:IncreaseXP
+        }
+        else
+        {
+            indexesOfErrorsInActualSentence.Add(indexOfActualCharacter);
+            //TODO:LowerXP
+        }
+        indexOfActualCharacter++;
+        if (indexOfActualCharacter >= textActual.Length)
+        {
+            OnSentenceEnding();
+            //TODO:Jouer le son du patron content ou pas content
         }
         sentenceActual.text = GenerateBalisedText(textActual, indexesOfErrorsInActualSentence, indexOfActualCharacter);
-    }
+    }   
 }
